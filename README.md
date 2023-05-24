@@ -10,3 +10,13 @@ Functions:
 * intro()
 
 ## Implementing Part 1 - Greedy Search Algorithms
+Forward Slection: Perform a forward selection search algorithm for feature selection, gradually building up a set of selected features based on their individual evaluation scores using randomization.
+
+Files:
+* Part1/ForwardSelection.java
+
+Functions:
+* searchForwardSelection(int)
+* evaluateFeatureNum (List)
+
+Backward Elimination:
