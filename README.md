@@ -1,5 +1,10 @@
 # FeatureSelection_NearestNeighbor
 
+## How To Run Program:
+1. Download file
+2. Compile: ```javac Main.java```,```javac Part1/ForwardSelection.java```, and ```javac Part1/BackwardElimination.java```
+3. Run ```java Main```
+
 ## Implementing Intro
 Using Scanner I get the number of features and decide which algorithm to use based of user. 
 
