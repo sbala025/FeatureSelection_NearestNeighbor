@@ -1,8 +1,10 @@
 import java.util.*;
 
+import Part1.ForwardSelection;
+
 public class Main {
-    static int FEATURE_NUM = 0;
-    static int ALGORITHM = 0;
+    static int FEATURE_NUM;
+    static int ALGORITHM;
 
     private static void intro() {
         System.out.println("Welcome to Shreya Balaji's Feature Selection Algorithm");
@@ -11,8 +13,8 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         // Get feature amount
-        int FEATURE_NUM = 0;
-        while(FEATURE_NUM ==0){
+        FEATURE_NUM = 0;
+        while(FEATURE_NUM == 0){
             System.out.println("Please enter the number of features: ");
             FEATURE_NUM = sc.nextInt();
                 if(FEATURE_NUM == 0){
@@ -21,7 +23,7 @@ public class Main {
         }
 
         // Decide which algorithm to run
-        int ALGORITHM = 0;
+        ALGORITHM = 0;
         while(ALGORITHM != 1 && ALGORITHM != 2 && ALGORITHM != 3){
             System.out.println("Type the number of the algorithm you want to run:");
             System.out.println("1 - Forward Selection");
@@ -33,6 +35,9 @@ public class Main {
             }
         }
 
+        System.out.println("Number of Features: " + Main.FEATURE_NUM);
+        System.out.println("Algo Chosen: " + Main.ALGORITHM);
+
         // Close Scanner
         sc.close();
     }
@@ -40,6 +45,9 @@ public class Main {
         intro();
 
         // PART 1 IMPLEMENTATION
+        if(Main.ALGORITHM == 1){
+            ForwardSelection.searchForwardSelection(Main.FEATURE_NUM);
+        }
     }
 
 }
