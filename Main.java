@@ -1,5 +1,6 @@
 import java.util.*;
 
+import Part1.BackwardElimination;
 import Part1.ForwardSelection;
 
 public class Main {
@@ -27,7 +28,7 @@ public class Main {
         while(ALGORITHM != 1 && ALGORITHM != 2 && ALGORITHM != 3){
             System.out.println("Type the number of the algorithm you want to run:");
             System.out.println("1 - Forward Selection");
-            System.out.println("2 - backward Elimination");
+            System.out.println("2 - Backward Elimination");
             System.out.println("3 - Bertie's Special Algorithm");
             ALGORITHM = sc.nextInt();
             if(ALGORITHM != 1 && ALGORITHM != 2 && ALGORITHM != 3){
@@ -47,6 +48,9 @@ public class Main {
         // PART 1 IMPLEMENTATION
         if(Main.ALGORITHM == 1){
             ForwardSelection.searchForwardSelection(Main.FEATURE_NUM);
+        }
+        else if(Main.ALGORITHM == 2){
+            BackwardElimination.searchBackwardElimination(Main.FEATURE_NUM);
         }
     }
 
