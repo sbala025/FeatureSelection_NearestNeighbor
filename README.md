@@ -1,4 +1,4 @@
-# FeatureSelection_NearestNeighbor
+# Feature Selection With Nearest Neighbor
 
 ## How To Run Program:
 1. Download file
