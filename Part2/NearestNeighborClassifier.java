@@ -27,12 +27,16 @@ public class NearestNeighborClassifier {
 
     private double calculateEuclideanDistance(Instance instance1, Instance instance2) {
         double dist = 0;
-        // Implement the calculation of Euclidean distance between two instances (n-dimensional feature vectors)
-        // You can use the Euclidean distance formula for n-dimensional space.
-        // Make sure to handle instances with different numbers of features.
+        List<Double> featureVector1 = instance1.getFeatureVector();
+        List<Double> featureVector2 = instance2.getFeatureVector();
+        int dimensions = featureVector1.size();
 
-        // Return the calculated Euclidean distance
-        return dist;
+        for (int i = 0; i < dimensions; i++) {
+            double diff = featureVector1.get(i) - featureVector2.get(i);
+            dist += Math.pow(diff, 2);
+        }
+
+        return Math.sqrt(dist);
     }
     
 }
