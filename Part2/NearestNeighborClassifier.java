@@ -66,4 +66,12 @@ class Instance {
     public void setClassLabel(String classLabel) {
         this.classLabel = classLabel;
     }
+
+    public List<Double> getFeatureSubset(List<Integer> featureSubset) {
+        List<Double> selectedFeatures = new ArrayList<>();
+        for (int index : featureSubset) {
+            selectedFeatures.add(featureVector.get(index));
+        }
+        return selectedFeatures;
+    }
 }
