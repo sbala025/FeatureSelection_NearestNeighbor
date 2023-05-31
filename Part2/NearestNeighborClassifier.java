@@ -38,40 +38,4 @@ public class NearestNeighborClassifier {
 
         return Math.sqrt(dist);
     }
-    
-}
-
-class Instance {
-    private List<Double> featureVector;
-    private String classLabel;
-
-    // Functions for Instance 
-    public Instance(List<Double> featureVector, String classLabel) {
-        this.featureVector = featureVector;
-        this.classLabel = classLabel;
-    }
-
-    public List<Double> getFeatureVector() {
-        return featureVector;
-    }
-
-    public void setFeatureVector(List<Double> featureVector) {
-        this.featureVector = featureVector;
-    }
-
-    public String getClassLabel() {
-        return classLabel;
-    }
-
-    public void setClassLabel(String classLabel) {
-        this.classLabel = classLabel;
-    }
-
-    public List<Double> getFeatureSubset(List<Integer> featureSubset) {
-        List<Double> selectedFeatures = new ArrayList<>();
-        for (int index : featureSubset) {
-            selectedFeatures.add(featureVector.get(index));
-        }
-        return selectedFeatures;
-    }
 }
