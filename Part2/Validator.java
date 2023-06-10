@@ -1,7 +1,7 @@
 package Part2;
-import java.util.List;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Validator {
     private NearestNeighborClassifier classifier;
@@ -15,18 +15,16 @@ public class Validator {
     public double evaluateFeatureSubset(List<Integer> featureSubset) {
         int correctPredictions = 0;
 
-        for (int i = 0; i < dataset.size(); i++) {
-            Instance testInstance = dataset.get(i);
-            List<Double> testFeatureVector = extractFeatureSubset(testInstance.getFeatureVector(), featureSubset);
-            Instance modifiedTestInstance = new Instance(testFeatureVector, testInstance.getClassLabel());
+        for (Instance testInstance : dataset) {
+            List<Instance> trainingInstances = removeInstanceAtIndex(dataset, dataset.indexOf(testInstance));
 
-            List<Instance> trainingInstances = removeInstanceAtIndex(dataset, i);
             classifier.train(trainingInstances);
 
-            String predictedClassLabel = classifier.test(modifiedTestInstance);
-            String actualClassLabel = testInstance.getClassLabel();
+            Instance normalizedTestInstance = normalizeInstance(testInstance, featureSubset);
 
-            if (predictedClassLabel.equals(actualClassLabel)) {
+            String predictedClassLabel = classifier.test(normalizedTestInstance);
+
+            if (predictedClassLabel.equals(testInstance.getClassLabel())) {
                 correctPredictions++;
             }
         }
@@ -34,19 +32,26 @@ public class Validator {
         return (double) correctPredictions / dataset.size();
     }
 
-    private List<Double> extractFeatureSubset(List<Double> featureVector, List<Integer> featureSubset) {
-        List<Double> subsetFeatureVector = new ArrayList<>();
-
-        for (int index : featureSubset) {
-            subsetFeatureVector.add(featureVector.get(index));
-        }
-
-        return subsetFeatureVector;
-    }
-
     private List<Instance> removeInstanceAtIndex(List<Instance> instances, int index) {
         List<Instance> modifiedInstances = new ArrayList<>(instances);
         modifiedInstances.remove(index);
         return modifiedInstances;
+    }
+
+    private Instance normalizeInstance(Instance instance, List<Integer> featureSubset) {
+        List<Double> normalizedFeatureVector = new ArrayList<>();
+        List<Double> featureVector = instance.getFeatureVector();
+
+        for (int index : featureSubset) {
+            if (index < 0 || index >= featureVector.size()) {
+                continue; // Skip invalid indices
+            }
+
+            double featureValue = featureVector.get(index);
+
+            normalizedFeatureVector.add(featureValue);
+        }
+
+        return new Instance(normalizedFeatureVector, instance.getClassLabel());
     }
 }
