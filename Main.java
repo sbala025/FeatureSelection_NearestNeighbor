@@ -12,7 +12,34 @@ public class Main {
     static int FEATURE_NUM;
     static int ALGORITHM;
 
-    private static void intro() {
+    private static String introPart2_3(String args[]) {
+        System.out.println("Welcome to Shreya Balaji's Feature Selection Algorithm");
+
+        Scanner scpt2 = new Scanner(System.in);
+        String dataset;
+        String small = args[0];
+        String large = args[1];
+        int choice = 0;
+
+        System.out.println("Choose a dataset (My Dataset is #39) \n1. Small Dataset\n2.Large Dataset");
+        choice = scpt2.nextInt();
+        if (choice == 1) {
+            dataset = small;
+            scpt2.close();
+            return dataset;
+        } else if (choice == 2) {
+            dataset = large;
+            scpt2.close();
+            return dataset;
+        } else {
+            System.out.println("Dataset defaults to small with invalid choice.");
+            dataset = small;
+        }
+        scpt2.close();
+        return dataset;
+    }
+
+    private static void introPart1() {
         System.out.println("Welcome to Shreya Balaji's Feature Selection Algorithm");
 
         // Open Scanner
@@ -71,19 +98,21 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String datasetFilePath = "/Users/shreyabalaji/Documents/CS170/FeatureSelection_NearestNeighbor/Dataset/small.txt";
+        String[] datasets = args;
+        String datasetFilePath;
         // Select Part 1 or Part 2
         int partChoice = 0;
-        System.out.println("This project consisted of three parts. The first part, simply runs forward and backward searches, there is no actual dataset. The second part, takes in a specific dataset and asks for a set of features. It then returns the accuracy of those features. The last part combines the feature searches and classification/validation process for a given dataset. \n\nChoose which part (enter either 1,2,or 3) needs to be tested: ");
-        while(partChoice != 1 && partChoice != 2 && partChoice != 3){
+        System.out.println(
+                "This project consisted of three parts. The first part, simply runs forward and backward searches, there is no actual dataset. The second part, takes in a specific dataset and asks for a set of features. It then returns the accuracy of those features. The last part combines the feature searches and classification/validation process for a given dataset. \n\nChoose which part (enter either 1,2,or 3) needs to be tested: ");
+        while (partChoice != 1 && partChoice != 2 && partChoice != 3) {
             partChoice = sc.nextInt();
-            if(partChoice > 3 || partChoice < 1){
+            if (partChoice > 3 || partChoice < 1) {
                 System.out.println("Please enter either 1,2, or 3.");
             }
         }
         switch (partChoice) {
             case 1:
-                intro();
+                introPart1();
 
                 // PART 1 IMPLEMENTATION
                 if (Main.ALGORITHM == 1) {
@@ -93,6 +122,7 @@ public class Main {
                 }
                 break;
             case 2:
+                datasetFilePath = introPart2_3(datasets);
                 // Read the dataset from file or create it
                 List<Instance> datasetPart2 = DatasetReader.readDataset(datasetFilePath);
 
@@ -112,6 +142,7 @@ public class Main {
                 System.out.println("Accuracy: " + accuracy);
                 break;
             case 3:
+                datasetFilePath = introPart2_3(datasets);
                 List<Instance> datasetPart3 = DatasetReader.readDataset(datasetFilePath); // Load your dataset here
 
                 FeatureSearch featureSearch = new FeatureSearch(datasetPart3);
