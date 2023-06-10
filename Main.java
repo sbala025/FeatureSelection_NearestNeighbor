@@ -6,6 +6,7 @@ import Part2.DatasetReader;
 import Part2.Instance;
 import Part2.NearestNeighborClassifier;
 import Part2.Validator;
+import Part3.FeatureSearch;
 
 public class Main {
     static int FEATURE_NUM;
@@ -73,8 +74,13 @@ public class Main {
         String datasetFilePath = "/Users/shreyabalaji/Documents/CS170/FeatureSelection_NearestNeighbor/Dataset/small.txt";
         // Select Part 1 or Part 2
         int partChoice = 0;
-        System.out.println("Choose which Part needs to be tested: ");
-        partChoice = sc.nextInt();
+        System.out.println("This project consisted of three parts. The first part, simply runs forward and backward searches, there is no actual dataset. The second part, takes in a specific dataset and asks for a set of features. It then returns the accuracy of those features. The last part combines the feature searches and classification/validation process for a given dataset. \n\nChoose which part (enter either 1,2,or 3) needs to be tested: ");
+        while(partChoice != 1 && partChoice != 2 && partChoice != 3){
+            partChoice = sc.nextInt();
+            if(partChoice > 3 || partChoice < 1){
+                System.out.println("Please enter either 1,2, or 3.");
+            }
+        }
         switch (partChoice) {
             case 1:
                 intro();
@@ -88,7 +94,7 @@ public class Main {
                 break;
             case 2:
                 // Read the dataset from file or create it
-                List<Instance> dataset = DatasetReader.readDataset(datasetFilePath);
+                List<Instance> datasetPart2 = DatasetReader.readDataset(datasetFilePath);
 
                 // Prompt the user for specific features
                 List<Integer> featureSubset = promptFeatureSubset();
@@ -97,7 +103,7 @@ public class Main {
                 NearestNeighborClassifier classifier = new NearestNeighborClassifier();
 
                 // Create a validator
-                Validator validator = new Validator(classifier, dataset);
+                Validator validator = new Validator(classifier, datasetPart2);
 
                 // Evaluate the feature subset
                 double accuracy = validator.evaluateFeatureSubset(featureSubset);
@@ -105,9 +111,24 @@ public class Main {
                 // Print the accuracy
                 System.out.println("Accuracy: " + accuracy);
                 break;
+            case 3:
+                List<Instance> datasetPart3 = DatasetReader.readDataset(datasetFilePath); // Load your dataset here
+
+                FeatureSearch featureSearch = new FeatureSearch(datasetPart3);
+
+                System.out.println("Forward Selection:");
+                List<Integer> forwardSelectedFeatures = featureSearch.forwardSelection();
+                System.out.println("Selected Features: " + forwardSelectedFeatures);
+                System.out.println("Accuracy: " + featureSearch.evaluateFeatureSubset(forwardSelectedFeatures));
+
+                System.out.println("Backward Elimination:");
+                List<Integer> backwardSelectedFeatures = featureSearch.backwardElimination();
+                System.out.println("Selected Features: " + backwardSelectedFeatures);
+                System.out.println("Accuracy: " + featureSearch.evaluateFeatureSubset(backwardSelectedFeatures));
+                break;
             default:
                 System.out.println(
-                        "Please choose and actual part. I cannot be bothered to make a catch for this mistake so just rerun the file.");
+                        "Error. Please chech file path.");
 
         }
 
